@@ -7,7 +7,7 @@ export default function() {
 
     let docData = doc.sketchObject.documentData()
 
-    let currentSwatches = docData.allSwatches()
+    let currentSwatches = doc.swatches
 
     let libraryName
 
@@ -28,14 +28,14 @@ export default function() {
     let swatchRefs = newLibrary.getImportableSwatchReferencesForDocument(doc)
 
     currentSwatches.forEach(swatch => {
-        let importableSwatch = swatchRefs.find(sw => sw.name == swatch.name())
+        let importableSwatch = swatchRefs.find(sw => sw.name == swatch.name)
         if (!importableSwatch) {
             return
         } else {
             let newSwatch = importableSwatch.import()
             docData
                 .replaceInstancesOfColor_withColor_ignoreAlphaWhenMatching_replaceAlphaOfOriginalColor(
-                    swatch.makeReferencingColor(),
+                    swatch.referencingColor,
                     newSwatch.referencingColor,
                     false,
                     false)
